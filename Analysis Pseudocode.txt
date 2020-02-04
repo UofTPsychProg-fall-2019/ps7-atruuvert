@@ -1,0 +1,61 @@
+Analysis Pseudocode: The Gap Effect Replication
+
+The raw data from my experiment will generate csv files with columns corresponding to the subject’s number, age, gender, handedness, trial number, size of the central fixation dot (5 or 7 pixels), condition (the gap length in seconds; there are 6 conditions), on what side the target appeared (L or R), reaction time, movement time, the location at which the participant touched the screen, and an indicator of whether the subject lifted their finger off the screen before the target appeared (coded as 0 or 1). There will also be several columns tracking when each stimulus appears and offsets to ensure the program timing is correct when running. 
+
+In this analysis, my IV of interest is condition (gap length) and my DV of interest is reaction time (RT). Since I am looking to replicate the gap effect, I will need to compute the mean RTs in each condition to see if I can observe a significant decrease in RTs between 200 and 300ms, with the greatest RT in the overlap condition. Since I will also be looking at the relationship between the gap effect and levels of anxious traits in my upcoming study, I will also include calculations of standard deviation (SD) in each condition and individual participant’s mean RTs and SDs in each condition.
+
+Before running the analysis file, the data will be cleaned by deleting blank cells and removing the initial 30 practice trials.
+
+Pseudocode to be written in R:
+
+—— Load packages ——
+
+psych
+tidyverse
+lme4
+
+—— Load data —— 
+
+set working directory
+read in the data files
+bind the data together into a new dataset
+
+—— Clean data ——
+
+exclude RTs outside range of 80-1000ms
+exclude MTs over 1000ms
+exclude trials where early ==1
+exclude trials where landing position is opposite of target side
+exclude trails where landing position x is not between 0.3 and 0.4
+
+—— Basic stats ——
+
+average RT and SD across all conditions
+- subset RT data in dataframe and use mean and sd functions
+
+average RT and SD for each condition:
+- subset the RT data in the dataframe and isolate each condition
+- calculate using sd and mean functions
+
+average RT and SD for each participant
+- subset the RT data in the dataframe and isolate each subject
+- calculate using sd and mean functions
+
+average RT and SD for each participant within each condition
+- define subset of data for each participant
+- define subset of data for each condition
+- find RT and SD for each combination using sd and mean functions
+
+—— Gap effect check ——
+
+anova comparing RTs across the conditions (cond ~ RT)
+
+plot the gap effect
+- create a vector of 6 subsets of the dataframe, each consisting of the RTs in a condition
+- the graph should show 1 line with 6 points (1 per condition), each point representing the average RT in each condition
+- x axis is gap length, y value is RT
+
+plot the gap effect for each participant to look at individual variability
+- create a vector for each participant with their RTs in each condition
+- the graph should show a line per participant, each point on their line representing their average RT in each condition
+- x axis is gap length, y value is RT
